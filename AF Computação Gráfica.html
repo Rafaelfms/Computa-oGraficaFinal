@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <title>Babylon.js sample code</title>
+
+    <!-- Babylon.js -->
+    <script src="https://code.jquery.com/pep/0.4.2/pep.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.6.2/dat.gui.min.js"></script>
+    <script src="https://preview.babylonjs.com/ammo.js"></script>
+    <script src="https://preview.babylonjs.com/cannon.js"></script>
+    <script src="https://preview.babylonjs.com/Oimo.js"></script>
+    <script src="https://preview.babylonjs.com/earcut.min.js"></script>
+    <script src="https://preview.babylonjs.com/babylon.js"></script>
+    <script src="https://preview.babylonjs.com/materialsLibrary/babylonjs.materials.min.js"></script>
+    <script src="https://preview.babylonjs.com/proceduralTexturesLibrary/babylonjs.proceduralTextures.min.js"></script>
+    <script src="https://preview.babylonjs.com/postProcessesLibrary/babylonjs.postProcess.min.js"></script>
+    <script src="https://preview.babylonjs.com/loaders/babylonjs.loaders.js"></script>
+    <script src="https://preview.babylonjs.com/serializers/babylonjs.serializers.min.js"></script>
+    <script src="https://preview.babylonjs.com/gui/babylon.gui.min.js"></script>
+    <script src="https://preview.babylonjs.com/inspector/babylon.inspector.bundle.js"></script>
+
+    <style>
+        html,
+        body {
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        #renderCanvas {
+            width: 100%;
+            height: 100%;
+            touch-action: none;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="renderCanvas"></canvas>
+    <script>
+var createScene = function () {
+	
+    var scene = new BABYLON.Scene(engine);
+
+	var camera = new BABYLON.ArcRotateCamera("Camera",1.3, 1.4, 120, BABYLON.Vector3.Zero(), scene);
+
+	camera.attachControl(canvas, true);
+
+	var light = new BABYLON.HemisphericLight("hemi", new BABYLON.Vector3(0, 1, 0), scene);
+
+    let holder = BABYLON.MeshBuilder.CreateSphere("holder", {diameter: 2, segments: 4}, scene);
+	let wheel = BABYLON.MeshBuilder.CreateSphere("base", {diameterY: 10, diameterZ: 1, diameterX: 10}, scene);
+
+    let box1 = BABYLON.MeshBuilder.CreateBox("tooth1", {width: 5.5, height:0.5, depth:3}, scene);
+    box1.parent = wheel;
+    box1.position.x = 7;
+
+    let box2 = box1.clone("tooth2");
+    box2.position.x = -7;
+
+    let box3 = box1.clone("tooth3");
+    box3.position.x = 0;
+    box3.position.y = 7;
+    box3.rotation.z = Math.PI / 2;
+
+    box4 = box3.clone("tooth4");
+    box4.position.y = -7;
+
+    // grounds
+    let ground1 = BABYLON.MeshBuilder.CreateBox("ground", {width: 20, height: .5,depth:4}, scene);
+    ground1.position.y = 12;
+    ground1.position.x = -12;
+    ground1.rotation.z = -0.2;
+
+    let ground2 = BABYLON.MeshBuilder.CreateBox("ground", {width: 20, height: .5,depth:4}, scene);
+    ground2.position.y = 17;
+    ground2.position.x = 10;
+    ground2.rotation.z = 0.2;
+
+    let ground3 = BABYLON.MeshBuilder.CreateBox("ground", {width: 20, height: .5,depth:4}, scene);
+    ground3.position.y = 22;
+    ground3.position.x = -10;
+    ground3.rotation.z = -0.2;
+
+    let ground4 = BABYLON.MeshBuilder.CreateBox("ground", {width: 50, height: 1,depth:15}, scene);
+    ground4.position.y = -15;
+    ground4.position.x = -40;
+    ground4.rotation.z = 0;
+
+    //planks
+    let plank1 = BABYLON.MeshBuilder.CreateBox("plank", {width: 0.5, height: 3,depth:2}, scene);
+    plank1.position.y = -13;
+    plank1.position.x = -17;
+    plank1.rotation.z = 0;
+
+    let plank2 = BABYLON.MeshBuilder.CreateBox("plank", {width: 0.5, height: 5,depth:3}, scene);
+    plank2.position.y = -12;
+    plank2.position.x = -18.5;
+    plank2.rotation.z = 0;
+
+    let plank3 = BABYLON.MeshBuilder.CreateBox("plank", {width: 0.5, height: 8,depth:4}, scene);
+    plank3.position.y = -11;
+    plank3.position.x = -21;
+    plank3.rotation.z = 0;
+
+    let plank4 = BABYLON.MeshBuilder.CreateBox("plank", {width: 0.5, height: 12,depth:5}, scene);
+    plank4.position.y = -9;
+    plank4.position.x = -25;
+    plank4.rotation.z = 0;
+
+    let plank5 = BABYLON.MeshBuilder.CreateBox("plank", {width: 0.5, height: 17,depth:6}, scene);
+    plank5.position.y = -7;
+    plank5.position.x = -31;
+    plank5.rotation.z = 0;
+
+    let plank6 = BABYLON.MeshBuilder.CreateBox("plank", {width: 0.5, height: 23,depth:7}, scene);
+    plank6.position.y = -3;
+    plank6.position.x = -39.5;
+    plank6.rotation.z = 0;
+
+    let plank7 = BABYLON.MeshBuilder.CreateBox("plank", {width: 0.5, height: 30,depth:8}, scene);
+    plank7.position.y = 0;
+    plank7.position.x = -51;
+    plank7.rotation.z = 0;
+
+    //balls
+    function ballPosition(ball) {
+        ball.position.y = 24;
+        ball.position.x = -15;
+    }
+
+    let ball = BABYLON.MeshBuilder.CreateSphere("ball", {diameter: 2, segments: 4}, scene);
+    ballPosition(ball);
+    let balls = [ball];
+
+
+
+    // physics
+
+    // cannon vs. oimo
+    let cannon = true;
+    let forceFactor = cannon ? 1 : 1500; 
+    scene.enablePhysics(null, new BABYLON.AmmoJSPlugin());
+    // impostors for the blades
+    [box1, box2, box3, box4].forEach((mesh) => {
+        mesh.physicsImpostor = new BABYLON.PhysicsImpostor(mesh, BABYLON.PhysicsImpostor.BoxImpostor, {mass: 0});
+    });
+
+    // the wheel
+    wheel.physicsImpostor = new BABYLON.PhysicsImpostor(wheel, BABYLON.PhysicsImpostor.SphereImpostor, {mass: 10});
+
+    // the planks
+    plank1.physicsImpostor = new BABYLON.PhysicsImpostor(plank1, BABYLON.PhysicsImpostor.BoxImpostor, {mass: 6});
+    plank2.physicsImpostor = new BABYLON.PhysicsImpostor(plank2, BABYLON.PhysicsImpostor.BoxImpostor, {mass: 6});
+    plank3.physicsImpostor = new BABYLON.PhysicsImpostor(plank3, BABYLON.PhysicsImpostor.BoxImpostor, {mass: 6});
+    plank4.physicsImpostor = new BABYLON.PhysicsImpostor(plank4, BABYLON.PhysicsImpostor.BoxImpostor, {mass: 6});
+    plank5.physicsImpostor = new BABYLON.PhysicsImpostor(plank5, BABYLON.PhysicsImpostor.BoxImpostor, {mass: 6});
+    plank6.physicsImpostor = new BABYLON.PhysicsImpostor(plank6, BABYLON.PhysicsImpostor.BoxImpostor, {mass: 6});
+    plank7.physicsImpostor = new BABYLON.PhysicsImpostor(plank7, BABYLON.PhysicsImpostor.BoxImpostor, {mass: 6});
+
+    // the center mesh that turns the wheel
+    holder.physicsImpostor = new BABYLON.PhysicsImpostor(holder, BABYLON.PhysicsImpostor.SphereImpostor, {mass: 0});
+
+    var joint1 = new BABYLON.HingeJoint({  
+        mainPivot: new BABYLON.Vector3(0, 0, 0),
+        connectedPivot: new BABYLON.Vector3(0, 0, 0),
+        mainAxis: new BABYLON.Vector3(0, 0, -1),
+        connectedAxis: new BABYLON.Vector3(0, 0, -1),
+        nativeParams: {
+        }
+    });
+    // add the joint and the motor
+    holder.physicsImpostor.addJoint(wheel.physicsImpostor, joint1);  
+
+    // spinning
+    joint1.setMotor(1 * forceFactor, 20 * forceFactor);
+
+    // impostors for the ground objects
+    [ground1,ground2,ground3,ground4].forEach(ground => {
+        ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.BoxImpostor, {mass: 0});
+    });
+
+    balls.forEach(ball => {
+        ball.physicsImpostor = new BABYLON.PhysicsImpostor(ball, BABYLON.PhysicsImpostor.SphereImpostor, {mass: 5});
+    });
+
+	return scene;
+}
+    </script>
+</body>
+
+</html>
