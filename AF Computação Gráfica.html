@@ -1,11 +1,56 @@
-var createScene = function () {
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+        <title>Babylon.js sample code</title>
+
+        <!-- Babylon.js -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.6.2/dat.gui.min.js"></script>
+        <script src="https://preview.babylonjs.com/ammo.js"></script>
+        <script src="https://preview.babylonjs.com/cannon.js"></script>
+        <script src="https://preview.babylonjs.com/Oimo.js"></script>
+        <script src="https://preview.babylonjs.com/earcut.min.js"></script>
+        <script src="https://preview.babylonjs.com/babylon.js"></script>
+        <script src="https://preview.babylonjs.com/materialsLibrary/babylonjs.materials.min.js"></script>
+        <script src="https://preview.babylonjs.com/proceduralTexturesLibrary/babylonjs.proceduralTextures.min.js"></script>
+        <script src="https://preview.babylonjs.com/postProcessesLibrary/babylonjs.postProcess.min.js"></script>
+        <script src="https://preview.babylonjs.com/loaders/babylonjs.loaders.js"></script>
+        <script src="https://preview.babylonjs.com/serializers/babylonjs.serializers.min.js"></script>
+        <script src="https://preview.babylonjs.com/gui/babylon.gui.min.js"></script>
+        <script src="https://preview.babylonjs.com/inspector/babylon.inspector.bundle.js"></script>
+
+        <style>
+            html, body {
+                overflow: hidden;
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+
+            #renderCanvas {
+                width: 100%;
+                height: 100%;
+                touch-action: none;
+            }
+        </style>
+    </head>
+<body>
+    <canvas id="renderCanvas"></canvas>
+    <script>
+        var canvas = document.getElementById("renderCanvas");
+        var engine = null;
+        var scene = null;
+        var sceneToRender = null;
+        var createDefaultEngine = function() { return new BABYLON.Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true,  disableWebGL2Support: false}); };
+        
+        var createScene = function () {
 	
     var scene = new BABYLON.Scene(engine);
 
-	var camera = new BABYLON.ArcRotateCamera("Camera",1.3, 1.4, 300, BABYLON.Vector3.Zero(), scene);
-
+var camera = new BABYLON.UniversalCamera("UniversalCamera", new BABYLON.Vector3(0, 0, -100), scene);
 	camera.attachControl(canvas, true);
-
 	var light = new BABYLON.HemisphericLight("hemi", new BABYLON.Vector3(0, 1, 0), scene);
 
     let holder = BABYLON.MeshBuilder.CreateSphere("holder", {diameter: 2, segments: 4}, scene);
@@ -46,24 +91,9 @@ var createScene = function () {
     ground4.position.y = -62;
     ground4.position.x = 60;
     ground4.rotation.z = 0;
-    
-    let ground5 = BABYLON.MeshBuilder.CreateBox("ground", {width: 20, height: .5,depth:4}, scene);
-    ground5.position.y = 27;
-    ground5.position.x = 10;
-    ground5.rotation.z = 0.2;
-
-    let ground6 = BABYLON.MeshBuilder.CreateBox("ground", {width: 0.5, height: 15,depth:4}, scene);
-    ground6.position.y = 36;
-    ground6.position.x = 20;
-    ground6.rotation.z = 0;
-
-    let ground10 = BABYLON.MeshBuilder.CreateBox("ground", {width: 20, height: 1,depth:4}, scene);
-    ground10.position.y = 22;
-    ground10.position.x = -50;
-    ground10.rotation.z = 0;
 
 
-    let ground16 = BABYLON.MeshBuilder.CreateBox("ground", {width: 40, height: .5,depth:6}, scene);
+    let ground16 = BABYLON.MeshBuilder.CreateBox("ground", {width: 40, height: .5,depth:7}, scene);
     ground16.position.y = -40;
     ground16.position.x = -10;
     ground16.rotation.z = 2.2;
@@ -112,7 +142,7 @@ var createScene = function () {
         ball.position.x = -10;
     }
 
-    let ball = BABYLON.MeshBuilder.CreateSphere("ball", {diameter: 2, segments: 4}, scene);
+    let ball = BABYLON.MeshBuilder.CreateSphere("ball", {diameter: 2}, scene);
     ballPosition(ball);
     let balls = [ball];
 
@@ -143,21 +173,474 @@ var createScene = function () {
     cylinder1.rotation.z = Math.PI/2;
     cylinder1.rotation.y = Math.PI/2;
 
-    let bigball = BABYLON.MeshBuilder.CreateSphere("ball", {diameter:9});
+    let bigball = BABYLON.MeshBuilder.CreateSphere("ball", {diameter:9.5});
     bigball.position.x= 22;
     bigball.position.y= -57;
     bigball.position.z= 0;
 
-    let ball2 = BABYLON.MeshBuilder.CreateSphere("ball", {diameter:2});
+    let ball2 = BABYLON.MeshBuilder.CreateSphere("ball", {diameter:2.2});
     ball2.position.x= 125;
     ball2.position.y= -54;
     ball2.position.z= 0;
 
-    let ground18 = BABYLON.MeshBuilder.CreateBox("ground", {width: 20, height: 0.5,depth:5}, scene);
+    let ground18 = BABYLON.MeshBuilder.CreateBox("ground", {width: 40, height: 0.5,depth:5}, scene);
 	ground18.position.y = -20;
     ground18.position.x = 90;
     ground18.rotation.z = -0.4;
 
+
+    //Box
+    var ground15 = BABYLON.MeshBuilder.CreateGround("ground", {width: 5, height: 5}, scene);
+    ground15.position.y=-20;
+    ground15.position.x=-15;
+    ground15.position.z=-4;
+    ground15.rotation.z=-.3;
+    ground15.rotation.x=.3;
+    var ground11 = BABYLON.MeshBuilder.CreateGround("ground", {width: 5, height: 5}, scene);
+    ground11.position.x=-9;
+    ground11.position.y=-20;
+    ground11.position.z=-4;
+    ground11.rotation.z=.3;
+    ground11.rotation.x=.3;
+    var ground12 = BABYLON.MeshBuilder.CreateGround("ground", {width: 5, height: 5}, scene);
+    ground12.position.z=2
+    ground12.position.y=-20;
+    ground12.position.x=-15;
+    ground12.rotation.z=-.3;
+    ground12.rotation.x=-.3;
+    var ground13 = BABYLON.MeshBuilder.CreateGround("ground", {width: 5, height: 5}, scene);
+    ground13.position.z=2
+    ground13.position.y=-20;
+    ground13.position.x=-9;
+    ground13.rotation.z=.3;
+    ground13.rotation.x=-.3;
+    var wall1 = BABYLON.MeshBuilder.CreateBox("ground", {width:12, depth:.3, height:3}, scene);
+    wall1.position.z=-7;
+    wall1.position.x=-12;
+    wall1.position.y=-20;
+    var wall2 = BABYLON.MeshBuilder.CreateBox("ground", {width:12, depth:.3, height:3}, scene);
+    wall2.position.z=5;
+    wall2.position.x=-12;
+    wall2.position.y=-20;
+    var wall3 = BABYLON.MeshBuilder.CreateBox("ground", {width:.3, depth:12, height:3}, scene);
+    wall3.position.z=-1;
+    wall3.position.x=-18;
+    wall3.position.y=-20;
+    var wall4 = BABYLON.MeshBuilder.CreateBox("ground", {width:.3, depth:12, height:3}, scene);
+    wall4.position.z=-1;
+    wall4.position.x=-6;
+    wall4.position.y=-20;
+
+        var materialtransparent = new BABYLON.StandardMaterial('transpmat', scene);
+    materialtransparent.alpha = 0;
+
+    let plank8 = BABYLON.MeshBuilder.CreateBox("plank", {width: 2, height: 100,  depth:50}, scene);
+    plank8.position.y = -120;
+    plank8.position.x = 180;
+    plank8.rotation.z = 0;
+    let plank11 = BABYLON.MeshBuilder.CreateBox("plank", {width: 2, height: 100,  depth:50}, scene);
+    plank11.position.y = -120;
+    plank11.position.x = 170;
+    plank11.rotation.z = 0;
+    plank11.material=materialtransparent;
+    let plank9 = BABYLON.MeshBuilder.CreateBox("plank", {width: 1, height: 100,  depth:10}, scene);
+    plank9.position.y = -120;
+    plank9.position.x = 175;
+    plank9.position.z=25;
+    plank9.rotation.y = Math.PI/2;
+    let plank10 = BABYLON.MeshBuilder.CreateBox("plank", {width: 1, height: 100,  depth:10}, scene);
+    plank10.position.y = -120;
+    plank10.position.x = 175;
+    plank10.position.z=-25;
+    plank10.rotation.y = Math.PI/2;
+
+    var ground19 = BABYLON.MeshBuilder.CreateGround("ground", {width: 44, height: 5}, scene);
+    ground19.position.x=145;
+    ground19.position.y=-65;
+    ground19.rotation.z=-.15;
+
+
+    let prego = BABYLON.MeshBuilder.CreateCylinder("cylinder", {diameter:4, height:10});
+    prego.rotation.z= Math.PI/2;
+    prego.position.x= 175;
+    prego.position.y= -120;
+    prego.position.z= -20;
+    let prego1= BABYLON.MeshBuilder.CreateCylinder("cylinder", {diameter:4, height:10});
+    prego1.rotation.z= Math.PI/2;
+    prego1.position.x= 175;
+    prego1.position.y= -120;
+    prego1.position.z= -10;
+    let prego2= BABYLON.MeshBuilder.CreateCylinder("cylinder", {diameter:4, height:10});
+    prego2.rotation.z= Math.PI/2;
+    prego2.position.x= 175;
+    prego2.position.y= -120;
+    prego2.position.z= 0;
+    let prego3= BABYLON.MeshBuilder.CreateCylinder("cylinder", {diameter:4, height:10});
+    prego3.rotation.z= Math.PI/2;
+    prego3.position.x= 175;
+    prego3.position.y= -120;
+    prego3.position.z= 10;
+    let prego4= BABYLON.MeshBuilder.CreateCylinder("cylinder", {diameter:4, height:10});
+    prego4.rotation.z= Math.PI/2;
+    prego4.position.x= 175;
+    prego4.position.y= -120;
+    prego4.position.z= 20;
+
+    let prego5 = BABYLON.MeshBuilder.CreateCylinder("cylinder", {diameter:4, height:10});
+    prego5.rotation.z= Math.PI/2;
+    prego5.position.x= 175;
+    prego5.position.y= -100;
+    prego5.position.z= -20;
+    let prego9= BABYLON.MeshBuilder.CreateCylinder("cylinder", {diameter:4, height:10});
+    prego9.rotation.z= Math.PI/2;
+    prego9.position.x= 175;
+    prego9.position.y= -100;
+    prego9.position.z= -10;
+    let prego6= BABYLON.MeshBuilder.CreateCylinder("cylinder", {diameter:4, height:10});
+    prego6.rotation.z= Math.PI/2;
+    prego6.position.x= 175;
+    prego6.position.y= -100;
+    prego6.position.z= 0;
+    let prego7= BABYLON.MeshBuilder.CreateCylinder("cylinder", {diameter:4, height:10});
+    prego7.rotation.z= Math.PI/2;
+    prego7.position.x= 175;
+    prego7.position.y= -100;
+    prego7.position.z= 10;
+    let prego8= BABYLON.MeshBuilder.CreateCylinder("cylinder", {diameter:4, height:10});
+    prego8.rotation.z= Math.PI/2;
+    prego8.position.x= 175;
+    prego8.position.y= -100;
+    prego8.position.z= 20;
+
+    let prego15 = BABYLON.MeshBuilder.CreateCylinder("cylinder", {diameter:4, height:10});
+    prego15.rotation.z= Math.PI/2;
+    prego15.position.x= 175;
+    prego15.position.y= -140;
+    prego15.position.z= -20;
+    let prego11= BABYLON.MeshBuilder.CreateCylinder("cylinder", {diameter:4, height:10});
+    prego11.rotation.z= Math.PI/2;
+    prego11.position.x= 175;
+    prego11.position.y= -140;
+    prego11.position.z= -10;
+    let prego12= BABYLON.MeshBuilder.CreateCylinder("cylinder", {diameter:4, height:10});
+    prego12.rotation.z= Math.PI/2;
+    prego12.position.x= 175;
+    prego12.position.y= -140;
+    prego12.position.z= 0;
+    let prego13= BABYLON.MeshBuilder.CreateCylinder("cylinder", {diameter:4, height:10});
+    prego13.rotation.z= Math.PI/2;
+    prego13.position.x= 175;
+    prego13.position.y= -140;
+    prego13.position.z= 10;
+    let prego14= BABYLON.MeshBuilder.CreateCylinder("cylinder", {diameter:4, height:10});
+    prego14.rotation.z= Math.PI/2;
+    prego14.position.x= 175;
+    prego14.position.y= -140;
+    prego14.position.z= 20;
+
+        let prego16 = BABYLON.MeshBuilder.CreateCylinder("cylinder", {diameter:4, height:10});
+    prego16.rotation.z= Math.PI/2;
+    prego16.position.x= 175;
+    prego16.position.y= -160;
+    prego16.position.z= -20;
+    let prego17= BABYLON.MeshBuilder.CreateCylinder("cylinder", {diameter:4, height:10});
+    prego17.rotation.z= Math.PI/2;
+    prego17.position.x= 175;
+    prego17.position.y= -160;
+    prego17.position.z= -10;
+    let prego18= BABYLON.MeshBuilder.CreateCylinder("cylinder", {diameter:4, height:10});
+    prego18.rotation.z= Math.PI/2;
+    prego18.position.x= 175;
+    prego18.position.y= -160;
+    prego18.position.z= 0;
+    let prego19= BABYLON.MeshBuilder.CreateCylinder("cylinder", {diameter:4, height:10});
+    prego19.rotation.z= Math.PI/2;
+    prego19.position.x= 175;
+    prego19.position.y= -160;
+    prego19.position.z= 10;
+    let prego20= BABYLON.MeshBuilder.CreateCylinder("cylinder", {diameter:4, height:10});
+    prego20.rotation.z= Math.PI/2;
+    prego20.position.x= 175;
+    prego20.position.y= -160;
+    prego20.position.z= 20;
+
+        let pregoa = BABYLON.MeshBuilder.CreateCylinder("cylinder", {diameter:4, height:10});
+    pregoa.rotation.z= Math.PI/2;
+    pregoa.position.x= 175;
+    pregoa.position.y= -110;
+    pregoa.position.z= -15;
+    let pregob= BABYLON.MeshBuilder.CreateCylinder("cylinder", {diameter:4, height:10});
+    pregob.rotation.z= Math.PI/2;
+    pregob.position.x= 175;
+    pregob.position.y= -110;
+    pregob.position.z= -5;
+    let pregoc= BABYLON.MeshBuilder.CreateCylinder("cylinder", {diameter:4, height:10});
+    pregoc.rotation.z= Math.PI/2;
+    pregoc.position.x= 175;
+    pregoc.position.y= -110;
+    pregoc.position.z= 5;
+    let pregod= BABYLON.MeshBuilder.CreateCylinder("cylinder", {diameter:4, height:10});
+    pregod.rotation.z= Math.PI/2;
+    pregod.position.x= 175;
+    pregod.position.y= -110;
+    pregod.position.z= 15;
+    let pregoe= BABYLON.MeshBuilder.CreateCylinder("cylinder", {diameter:4, height:10});
+    pregoe.rotation.z= Math.PI/2;
+    pregoe.position.x= 175;
+    pregoe.position.y= -110;
+    pregoe.position.z= 25;
+    let pregof= BABYLON.MeshBuilder.CreateCylinder("cylinder", {diameter:4, height:10});
+    pregof.rotation.z= Math.PI/2;
+    pregof.position.x= 175;
+    pregof.position.y= -110;
+    pregof.position.z= -25;
+
+            let pregog = BABYLON.MeshBuilder.CreateCylinder("cylinder", {diameter:4, height:10});
+    pregog.rotation.z= Math.PI/2;
+    pregog.position.x= 175;
+    pregog.position.y= -130;
+    pregog.position.z= -15;
+    let pregoh= BABYLON.MeshBuilder.CreateCylinder("cylinder", {diameter:4, height:10});
+    pregoh.rotation.z= Math.PI/2;
+    pregoh.position.x= 175;
+    pregoh.position.y= -130;
+    pregoh.position.z= -5;
+    let pregoi= BABYLON.MeshBuilder.CreateCylinder("cylinder", {diameter:4, height:10});
+    pregoi.rotation.z= Math.PI/2;
+    pregoi.position.x= 175;
+    pregoi.position.y= -130;
+    pregoi.position.z= 5;
+    let pregoj= BABYLON.MeshBuilder.CreateCylinder("cylinder", {diameter:4, height:10});
+    pregoj.rotation.z= Math.PI/2;
+    pregoj.position.x= 175;
+    pregoj.position.y= -130;
+    pregoj.position.z= 15;
+    let pregok= BABYLON.MeshBuilder.CreateCylinder("cylinder", {diameter:4, height:10});
+    pregok.rotation.z= Math.PI/2;
+    pregok.position.x= 175;
+    pregok.position.y= -130;
+    pregok.position.z= 25;
+    let pregol= BABYLON.MeshBuilder.CreateCylinder("cylinder", {diameter:4, height:10});
+    pregol.rotation.z= Math.PI/2;
+    pregol.position.x= 175;
+    pregol.position.y= -130;
+    pregol.position.z= -25;
+
+    let pregom = BABYLON.MeshBuilder.CreateCylinder("cylinder", {diameter:4, height:10});
+    pregom.rotation.z= Math.PI/2;
+    pregom.position.x= 175;
+    pregom.position.y= -150;
+    pregom.position.z= -15;
+    let pregon= BABYLON.MeshBuilder.CreateCylinder("cylinder", {diameter:4, height:10});
+    pregon.rotation.z= Math.PI/2;
+    pregon.position.x= 175;
+    pregon.position.y= -150;
+    pregon.position.z= -5;
+    let pregoo= BABYLON.MeshBuilder.CreateCylinder("cylinder", {diameter:4, height:10});
+    pregoo.rotation.z= Math.PI/2;
+    pregoo.position.x= 175;
+    pregoo.position.y= -150;
+    pregoo.position.z= 5;
+    let pregor= BABYLON.MeshBuilder.CreateCylinder("cylinder", {diameter:4, height:10});
+    pregor.rotation.z= Math.PI/2;
+    pregor.position.x= 175;
+    pregor.position.y= -150;
+    pregor.position.z= 15;
+    let pregop= BABYLON.MeshBuilder.CreateCylinder("cylinder", {diameter:4, height:10});
+    pregop.rotation.z= Math.PI/2;
+    pregop.position.x= 175;
+    pregop.position.y= -150;
+    pregop.position.z= 25;
+    let pregoq= BABYLON.MeshBuilder.CreateCylinder("cylinder", {diameter:4, height:10});
+    pregoq.rotation.z= Math.PI/2;
+    pregoq.position.x= 175;
+    pregoq.position.y= -150;
+    pregoq.position.z= -25;
+
+    let pinball1 = BABYLON.MeshBuilder.CreateBox("plank", {width: 2, height: 100,  depth:50}, scene);
+    pinball1.position.y = -200;
+    pinball1.position.x = 135;
+    pinball1.rotation.z = 2;
+    let pinball2 = BABYLON.MeshBuilder.CreateBox("plank", {width: 10, height: 100,  depth:1}, scene);
+    pinball2.position.y = -200;
+    pinball2.position.x = 135;
+    pinball2.position.z=25;
+    pinball2.rotation.z = 2;
+    let pinball3 = BABYLON.MeshBuilder.CreateBox("plank", {width: 10, height: 100,  depth:1}, scene);
+    pinball3.position.y = -200;
+    pinball3.position.x = 135;
+    pinball3.position.z=-25;
+    pinball3.rotation.z = 2;
+
+    
+    var mat6 = new BABYLON.StandardMaterial("mat", scene);
+	mat6.diffuseColor = new BABYLON.Color3(3.07, 1.30, 1.21);
+    var mat5 = new BABYLON.StandardMaterial("mat4", scene);
+	mat5.alpha = 0.5;
+    var NewMesh = new BABYLON.Mesh("grupo1", scene);
+    var rotatory = BABYLON.MeshBuilder.CreateBox("rotatory", {width: 3, height: 15,  depth:1}, scene);
+    rotatory.rotation.z=2;
+    rotatory.position.y=-205;
+    rotatory.position.x=115;
+    rotatory.position.z=0;
+    rotatory.material=mat6;
+    var rotatory2 = BABYLON.MeshBuilder.CreateBox("rotatory", {width: 3, height: 15,  depth:1}, scene);
+    rotatory2.rotation.z=2;
+    rotatory2.position.y=-199;
+    rotatory2.position.x=130;
+    rotatory2.position.z=10;
+    rotatory2.material=mat6;
+    var rotatory3 = BABYLON.MeshBuilder.CreateBox("rotatory", {width: 3, height: 15,  depth:1}, scene);
+    rotatory3.rotation.z=2;
+    rotatory3.position.y=-199;
+    rotatory3.position.x=130;
+    rotatory3.position.z=-10;
+    rotatory3.material=mat6;
+    var rotatory4 = BABYLON.MeshBuilder.CreateBox("rotatory", {width: 3, height: 15,  depth:1}, scene);
+    rotatory4.rotation.z=2;
+    rotatory4.position.y=-193;
+    rotatory4.position.x=145;
+    rotatory4.position.z=-15;
+    rotatory4.material=mat6;
+    var rotatory5 = BABYLON.MeshBuilder.CreateBox("rotatory", {width: 3, height: 15,  depth:1}, scene);
+    rotatory5.rotation.z=2;
+    rotatory5.position.y=-190;
+    rotatory5.position.x=150;
+    rotatory5.position.z=12;
+    rotatory5.material=mat6;
+    var rotatory6 = BABYLON.MeshBuilder.CreateBox("rotatory", {width: 3, height: 15,  depth:1}, scene);
+    rotatory6.rotation.z=2;
+    rotatory6.position.y=-185;
+    rotatory6.position.x=160;
+    rotatory6.position.z=-13;
+    rotatory6.material=mat6;
+    var rotatory7 = BABYLON.MeshBuilder.CreateBox("rotatory", {width: 3, height: 15,  depth:1}, scene);
+    rotatory7.rotation.z=2;
+    rotatory7.position.y=-185;
+    rotatory7.position.x=165;
+    rotatory7.position.z=16;
+    rotatory7.material=mat6;
+
+    var liq1 = BABYLON.MeshBuilder.CreateBox("plank", {width: 2, height: 50,  depth:50}, scene);
+    liq1.position.y = -260;
+    liq1.position.x = 60;
+    liq1.rotation.z = 0;
+    var liq2 = BABYLON.MeshBuilder.CreateBox("plank", {width: 2, height: 50,  depth:50}, scene);
+    liq2.position.y = -260;
+    liq2.position.x = 110;
+    liq2.rotation.z = 0;
+    var liq3 = BABYLON.MeshBuilder.CreateBox("plank", {width: 50, height: 50,  depth:2}, scene);
+    liq3.position.y = -260;
+    liq3.position.x = 85;
+    liq3.position.z = 25;
+    var liq4 = BABYLON.MeshBuilder.CreateBox("plank", {width: 50, height: 50,  depth:2}, scene);
+    liq4.position.y = -260;
+    liq4.position.x = 85;
+    liq4.position.z = -25;
+    var liq5 = BABYLON.MeshBuilder.CreateBox("plank", {width: 2, height:15,  depth:50}, scene);
+    liq5.position.y = -240;
+    liq5.position.x = 65;
+    liq5.position.z = 0;
+    liq5.rotation.z=-2;
+    var liq6 = BABYLON.MeshBuilder.CreateBox("plank", {width: 2, height:3,  depth:15}, scene);
+    liq6.position.y = -217;
+    liq6.position.x = 90;
+    liq6.position.z = 25;
+    liq6.rotation.y=-2.2;
+    var liq7 = BABYLON.MeshBuilder.CreateBox("plank", {width: 2, height:3,  depth:15}, scene);
+    liq7.position.y = -217;
+    liq7.position.x = 90;
+    liq7.position.z = -25;
+    liq7.rotation.y=2.2;
+    var liq8 = BABYLON.MeshBuilder.CreateBox("plank", {width: 50, height:2,  depth:50}, scene);
+    liq8.position.y = -285;
+    liq8.position.x = 85;
+    liq8.position.z = 0;
+    liq1.material=mat5;
+    liq2.material=mat5;
+    liq3.material=mat5;
+    liq4.material=mat5;
+    liq5.material=mat5;
+    liq8.material=mat5;
+
+
+    var rotatory8 = BABYLON.MeshBuilder.CreateBox("rotatory", {width: 3, height: 70,  depth:1}, scene);
+    rotatory8.rotation.z=Math.PI/2;
+    rotatory8.position.y=-275;
+    rotatory8.position.x=85;
+    rotatory8.position.z=0;
+    rotatory8.material=mat6;
+    var rotatory9 = BABYLON.MeshBuilder.CreateBox("rotatory", {width: 3, height: 70,  depth:1}, scene);
+    rotatory9.rotation.z=Math.PI/2;
+    rotatory9.position.y=-280;
+    rotatory9.position.x=85;
+    rotatory9.position.z=0;
+    rotatory9.material=mat6;
+    var rotatory10 = BABYLON.MeshBuilder.CreateBox("rotatory", {width: 3, height: 70,  depth:1}, scene);
+    rotatory10.rotation.z=Math.PI/2;
+    rotatory10.position.y=-270;
+    rotatory10.position.x=85;
+    rotatory10.position.z=0;
+    rotatory10.material=mat6;
+
+    scene.registerBeforeRender(function () {
+        //Rotate around its own axis
+        rotatory.rotate(BABYLON.Axis.X, -Math.PI/200, BABYLON.Space.LOCAL);
+        rotatory2.rotate(BABYLON.Axis.X, -Math.PI/200, BABYLON.Space.LOCAL);
+        rotatory3.rotate(BABYLON.Axis.X, Math.PI/200, BABYLON.Space.LOCAL);
+        rotatory4.rotate(BABYLON.Axis.X, -Math.PI/200, BABYLON.Space.LOCAL);
+        rotatory5.rotate(BABYLON.Axis.X, Math.PI/200, BABYLON.Space.LOCAL);
+        rotatory6.rotate(BABYLON.Axis.X, Math.PI/200, BABYLON.Space.LOCAL);
+        rotatory7.rotate(BABYLON.Axis.X, Math.PI/200, BABYLON.Space.LOCAL);
+        rotatory8.rotate(BABYLON.Axis.X, -Math.PI/50, BABYLON.Space.LOCAL);
+        rotatory9.rotate(BABYLON.Axis.X, Math.PI/70, BABYLON.Space.LOCAL);
+        rotatory10.rotate(BABYLON.Axis.X, Math.PI/40, BABYLON.Space.LOCAL);
+        prego.rotate(BABYLON.Axis.Y,  -Math.PI/200, BABYLON.Space.LOCAL);
+        prego1.rotate(BABYLON.Axis.Y, Math.PI/200, BABYLON.Space.LOCAL);
+        prego2.rotate(BABYLON.Axis.Y, -Math.PI/200, BABYLON.Space.LOCAL);
+        prego3.rotate(BABYLON.Axis.Y, Math.PI/200, BABYLON.Space.LOCAL);
+        prego4.rotate(BABYLON.Axis.Y, -Math.PI/200, BABYLON.Space.LOCAL);
+        prego5.rotate(BABYLON.Axis.Y, Math.PI/200, BABYLON.Space.LOCAL);
+        prego6.rotate(BABYLON.Axis.Y, -Math.PI/200, BABYLON.Space.LOCAL);
+        prego7.rotate(BABYLON.Axis.Y, Math.PI/200, BABYLON.Space.LOCAL);
+        prego8.rotate(BABYLON.Axis.Y, -Math.PI/200, BABYLON.Space.LOCAL);
+        prego9.rotate(BABYLON.Axis.Y, Math.PI/200, BABYLON.Space.LOCAL);
+        prego11.rotate(BABYLON.Axis.Y, -Math.PI/200, BABYLON.Space.LOCAL);
+        prego12.rotate(BABYLON.Axis.Y, Math.PI/200, BABYLON.Space.LOCAL);
+        prego13.rotate(BABYLON.Axis.Y, -Math.PI/200, BABYLON.Space.LOCAL);
+        prego14.rotate(BABYLON.Axis.Y, Math.PI/200, BABYLON.Space.LOCAL);
+        prego15.rotate(BABYLON.Axis.Y, -Math.PI/200, BABYLON.Space.LOCAL);
+        prego16.rotate(BABYLON.Axis.Y, Math.PI/200, BABYLON.Space.LOCAL);
+        prego17.rotate(BABYLON.Axis.Y, -Math.PI/200, BABYLON.Space.LOCAL);
+        prego18.rotate(BABYLON.Axis.Y, Math.PI/200, BABYLON.Space.LOCAL);
+        prego19.rotate(BABYLON.Axis.Y, -Math.PI/200, BABYLON.Space.LOCAL);
+        prego20.rotate(BABYLON.Axis.Y, -Math.PI/200, BABYLON.Space.LOCAL);
+        pregoa.rotate(BABYLON.Axis.Y, Math.PI/200, BABYLON.Space.LOCAL);
+        pregob.rotate(BABYLON.Axis.Y, -Math.PI/200, BABYLON.Space.LOCAL);
+        pregoc.rotate(BABYLON.Axis.Y, Math.PI/200, BABYLON.Space.LOCAL);
+        pregod.rotate(BABYLON.Axis.Y, -Math.PI/200, BABYLON.Space.LOCAL);
+        pregoe.rotate(BABYLON.Axis.Y, -Math.PI/200, BABYLON.Space.LOCAL);
+        pregof.rotate(BABYLON.Axis.Y, Math.PI/200, BABYLON.Space.LOCAL);
+        pregog.rotate(BABYLON.Axis.Y, -Math.PI/200, BABYLON.Space.LOCAL);
+        pregoh.rotate(BABYLON.Axis.Y, Math.PI/200, BABYLON.Space.LOCAL);
+        pregoi.rotate(BABYLON.Axis.Y, -Math.PI/200, BABYLON.Space.LOCAL);
+        pregoj.rotate(BABYLON.Axis.Y, Math.PI/200, BABYLON.Space.LOCAL);
+        pregok.rotate(BABYLON.Axis.Y, -Math.PI/200, BABYLON.Space.LOCAL);
+        pregol.rotate(BABYLON.Axis.Y, Math.PI/200, BABYLON.Space.LOCAL);
+        pregom.rotate(BABYLON.Axis.Y, -Math.PI/200, BABYLON.Space.LOCAL);
+        pregon.rotate(BABYLON.Axis.Y, Math.PI/200, BABYLON.Space.LOCAL);
+        pregoo.rotate(BABYLON.Axis.Y, -Math.PI/200, BABYLON.Space.LOCAL);
+        pregop.rotate(BABYLON.Axis.Y, Math.PI/200, BABYLON.Space.LOCAL);
+        pregoq.rotate(BABYLON.Axis.Y, -Math.PI/200, BABYLON.Space.LOCAL);
+        pregor.rotate(BABYLON.Axis.Y, Math.PI/200, BABYLON.Space.LOCAL);
+    });
+
+    //texturas
+    /*const groundmat= new BABYLON.StandardMaterial("groundmat");
+    groundmat.diffuseTexture = new BABYLON.Texture("https://raw.githubusercontent.com/Saiterxx/audios/master/D_NQ_NP_2X_821640-MLB43965702715_112020-F.webp");
+    groundmat.diffuseTexture.wAng = Math.PI/2; 
+    pregoq.material=groundmat;
+*/
     // physics
 
     // cannon vs. oimo
@@ -177,7 +660,11 @@ var createScene = function () {
     mesh.physicsImpostor = new BABYLON.PhysicsImpostor(mesh, BABYLON.PhysicsImpostor.BoxImpostor, {mass: 6});
     });
 
-    
+    //Pregos
+    [prego,prego1,prego2,prego3,prego4,prego5,prego6,prego7,prego8,prego9,prego11,prego12,prego13,prego14,prego15,prego16,prego17,prego18,prego19,prego20,pregoa,pregob,pregoc,pregod,pregoe,pregof,pregog,pregoh,pregoi,pregoj,pregok,pregol,pregom,pregon,pregoo,pregop,pregoq,pregor].forEach((mesh) => {
+    mesh.physicsImpostor = new BABYLON.PhysicsImpostor(mesh, BABYLON.PhysicsImpostor.CylinderImpostor, {mass: 0});
+    });
+
     // the center mesh that turns the wheel
     holder.physicsImpostor = new BABYLON.PhysicsImpostor(holder, BABYLON.PhysicsImpostor.SphereImpostor, {mass: 0});
 
@@ -185,7 +672,7 @@ var createScene = function () {
     bigball.physicsImpostor = new BABYLON.PhysicsImpostor(bigball, BABYLON.PhysicsImpostor.SphereImpostor, {mass: 10});
 
     // ball2
-    ball2.physicsImpostor = new BABYLON.PhysicsImpostor(ball2, BABYLON.PhysicsImpostor.SphereImpostor, {mass: 0.5});
+    ball2.physicsImpostor = new BABYLON.PhysicsImpostor(ball2, BABYLON.PhysicsImpostor.SphereImpostor, {mass: 0.45});
 
 
     var joint1 = new BABYLON.HingeJoint({  
@@ -204,7 +691,7 @@ var createScene = function () {
 
 
     // impostors for the ground objects
-    [ground1,ground18,ground2,ground3,ground4,ground5,ground6,ground7,ground8,ground9,ground10,ground16,cylinder1].forEach(ground => {
+    [liq8,liq6,liq7,liq5,liq4,rotatory8,rotatory9,rotatory10,liq1,liq2,liq3,rotatory7,ground1,ground18,ground2,ground3,ground4,ground7,ground8,ground9,ground11,ground12,ground13,ground15,ground16,ground18,ground19,wall1,wall2,wall3,wall4,cylinder1,plank8,plank9,plank10,plank11, pinball1, pinball2, pinball3, rotatory, rotatory2, rotatory3, rotatory4, rotatory5, rotatory6].forEach(ground => {
         ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.BoxImpostor, {mass: 0});
     });
 
@@ -214,3 +701,43 @@ var createScene = function () {
 
 	return scene;
 };
+                window.initFunction = async function() {               
+                    var asyncEngineCreation = async function() {
+                        try {
+                        await Ammo();
+                        return createDefaultEngine();
+                        } catch(e) {
+                        console.log("the available createEngine function failed. Creating the default engine instead");
+                        return createDefaultEngine();
+                        }
+                    }
+
+                    window.engine = await asyncEngineCreation();
+        if (!engine) throw 'engine should not be null.';
+        window.scene = createScene();};
+        initFunction().then(() => {sceneToRender = scene        
+            engine.runRenderLoop(function () {
+                if (sceneToRender && sceneToRender.activeCamera) {
+                    sceneToRender.render();
+                }
+                if (scene) {
+                loop();
+                scene.render();
+            }
+            });
+        });
+
+        function loop()
+        {
+             var grupo1 = scene.getMeshByName("grupo1");
+             grupo1.rotation.y -= 0.1;
+        };
+
+
+        // Resize
+        window.addEventListener("resize", function () {
+            engine.resize();
+        });
+    </script>
+</body>
+</html>
