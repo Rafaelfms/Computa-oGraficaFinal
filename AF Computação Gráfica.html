@@ -2,7 +2,7 @@ var createScene = function () {
 	
     var scene = new BABYLON.Scene(engine);
 
-	var camera = new BABYLON.ArcRotateCamera("Camera",1.3, 1.4, 200, BABYLON.Vector3.Zero(), scene);
+	var camera = new BABYLON.ArcRotateCamera("Camera",1.3, 1.4, 300, BABYLON.Vector3.Zero(), scene);
 
 	camera.attachControl(canvas, true);
 
@@ -62,32 +62,12 @@ var createScene = function () {
     ground10.position.x = -50;
     ground10.rotation.z = 0;
 
-    var ground15 = BABYLON.MeshBuilder.CreateGround("ground", {width: 6, height: 6}, scene);
-    ground15.position.y=-20;
-    ground15.position.x=-11;
-    var ground11 = BABYLON.MeshBuilder.CreateGround("ground", {width: 6, height: 6}, scene);
-    ground11.position.x=-5;
-    ground11.position.y=-20;
-    var ground12 = BABYLON.MeshBuilder.CreateGround("ground", {width: 6, height: 6}, scene);
-    ground12.position.z=6
-    ground12.position.y=-20;
-    ground12.position.x=-11;
-    var wall1 = BABYLON.MeshBuilder.CreateBox("ground", {width:12, depth:.3, height:3}, scene);
-    wall1.position.z=-3;
-    wall1.position.x=-8;
-    wall1.position.y=-20;
-    var wall2 = BABYLON.MeshBuilder.CreateBox("ground", {width:12, depth:.3, height:3}, scene);
-    wall2.position.z=9;
-    wall2.position.x=-8;
-    wall2.position.y=-20;
-    var wall3 = BABYLON.MeshBuilder.CreateBox("ground", {width:.3, depth:12, height:3}, scene);
-    wall3.position.z=3;
-    wall3.position.x=-14;
-    wall3.position.y=-20;
-    var wall4 = BABYLON.MeshBuilder.CreateBox("ground", {width:.3, depth:12, height:3}, scene);
-    wall4.position.z=3;
-    wall4.position.x=-2;
-    wall4.position.y=-20;
+
+    let ground16 = BABYLON.MeshBuilder.CreateBox("ground", {width: 40, height: .5,depth:6}, scene);
+    ground16.position.y = -40;
+    ground16.position.x = -10;
+    ground16.rotation.z = 2.2;
+    
 
 
     //planks
@@ -129,7 +109,7 @@ var createScene = function () {
     //balls
     function ballPosition(ball) {
         ball.position.y = 30;
-        ball.position.x = -55;
+        ball.position.x = -10;
     }
 
     let ball = BABYLON.MeshBuilder.CreateSphere("ball", {diameter: 2, segments: 4}, scene);
@@ -152,12 +132,31 @@ var createScene = function () {
     ground9.position.z = 5;
     ground9.rotation.y=Math.PI/2;
 
-    let cylinder = BABYLON.MeshBuilder.CreateCylinder("cylinder", {diameter:4, height:10});
-    cylinder.rotation.z= Math.PI/2;
-    cylinder.position.x= 22;
-    cylinder.position.y= -57;
-    cylinder.position.z= 0;
+    let ground17 = BABYLON.MeshBuilder.CreateBox("ground", {width: 30, height: 0.5,depth:5}, scene);
+	ground17.position.y = -55;
+    ground17.position.x = 115;
+    ground17.position.z = 0;
+    
+    let cylinder1 = BABYLON.MeshBuilder.CreateCylinder("ground", {diameter: 5, height: 5}, scene);
+	cylinder1.position.y = -58;
+    cylinder1.position.x = 115;
+    cylinder1.rotation.z = Math.PI/2;
+    cylinder1.rotation.y = Math.PI/2;
 
+    let bigball = BABYLON.MeshBuilder.CreateSphere("ball", {diameter:9});
+    bigball.position.x= 22;
+    bigball.position.y= -57;
+    bigball.position.z= 0;
+
+    let ball2 = BABYLON.MeshBuilder.CreateSphere("ball", {diameter:2});
+    ball2.position.x= 125;
+    ball2.position.y= -54;
+    ball2.position.z= 0;
+
+    let ground18 = BABYLON.MeshBuilder.CreateBox("ground", {width: 20, height: 0.5,depth:5}, scene);
+	ground18.position.y = -20;
+    ground18.position.x = 90;
+    ground18.rotation.z = -0.4;
 
     // physics
 
@@ -174,15 +173,19 @@ var createScene = function () {
     wheel.physicsImpostor = new BABYLON.PhysicsImpostor(wheel, BABYLON.PhysicsImpostor.SphereImpostor, {mass: 10});
 
     // the planks
-    [plank1, plank2, plank3, plank4, plank5, plank6, plank7].forEach((mesh) => {
+    [plank1, plank2, plank3, plank4, plank5, plank6, plank7,ground17].forEach((mesh) => {
     mesh.physicsImpostor = new BABYLON.PhysicsImpostor(mesh, BABYLON.PhysicsImpostor.BoxImpostor, {mass: 6});
     });
 
+    
     // the center mesh that turns the wheel
     holder.physicsImpostor = new BABYLON.PhysicsImpostor(holder, BABYLON.PhysicsImpostor.SphereImpostor, {mass: 0});
 
-    // cylinder
-    cylinder.physicsImpostor = new BABYLON.PhysicsImpostor(cylinder, BABYLON.PhysicsImpostor.SphereImpostor, {mass: 0});
+    // bigball
+    bigball.physicsImpostor = new BABYLON.PhysicsImpostor(bigball, BABYLON.PhysicsImpostor.SphereImpostor, {mass: 10});
+
+    // ball2
+    ball2.physicsImpostor = new BABYLON.PhysicsImpostor(ball2, BABYLON.PhysicsImpostor.SphereImpostor, {mass: 0.5});
 
 
     var joint1 = new BABYLON.HingeJoint({  
@@ -197,11 +200,11 @@ var createScene = function () {
     holder.physicsImpostor.addJoint(wheel.physicsImpostor, joint1);  
 
     // spinning
-    joint1.setMotor(3 * forceFactor, 20 * forceFactor);
+    joint1.setMotor(1 * forceFactor, 20 * forceFactor);
 
 
     // impostors for the ground objects
-    [ground1,ground2,ground3,ground4,ground5,ground6,ground7,ground8,ground9,ground10].forEach(ground => {
+    [ground1,ground18,ground2,ground3,ground4,ground5,ground6,ground7,ground8,ground9,ground10,ground16,cylinder1].forEach(ground => {
         ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.BoxImpostor, {mass: 0});
     });
 
