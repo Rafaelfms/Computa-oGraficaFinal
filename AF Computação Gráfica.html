@@ -53,6 +53,11 @@ var camera = new BABYLON.UniversalCamera("UniversalCamera", new BABYLON.Vector3(
 	camera.attachControl(canvas, true);
 	var light = new BABYLON.HemisphericLight("hemi", new BABYLON.Vector3(0, 1, 0), scene);
 
+            //audio
+            var music = new BABYLON.Sound("Music", "https://dl.dropboxusercontent.com/s/ybywf0jk3z7dnme/19305499_conference-event_by_music_for_video_preview.mp3", scene, null, {
+            }   );
+
+
     let holder = BABYLON.MeshBuilder.CreateSphere("holder", {diameter: 2, segments: 4}, scene);
 	let wheel = BABYLON.MeshBuilder.CreateSphere("base", {diameterY: 10, diameterZ: 1, diameterX: 10}, scene);
 
