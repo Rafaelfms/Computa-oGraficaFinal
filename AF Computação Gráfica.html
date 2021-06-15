@@ -653,6 +653,39 @@ var camera = new BABYLON.UniversalCamera("UniversalCamera", new BABYLON.Vector3(
     domino6.diffuseTexture = new BABYLON.Texture("https://raw.githubusercontent.com/Saiterxx/Computa-oGraficaFinal/main/2_0.webp");
     const grayt= new BABYLON.StandardMaterial("groundmat");
     grayt.diffuseTexture = new BABYLON.Texture("https://raw.githubusercontent.com/Saiterxx/Computa-oGraficaFinal/main/photos_2020_5_11_fst_gray-wall-grunge.webp");
+    const wood= new BABYLON.StandardMaterial("groundmat");
+    wood.diffuseTexture = new BABYLON.Texture("https://raw.githubusercontent.com/Saiterxx/Computa-oGraficaFinal/main/wood%202.webp");
+    ball.material=groundmat;
+    ball2.material=groundmat;
+    bigball.material=groundmat;
+    liq6.material=grayt;
+    liq7.material=grayt;
+    ground1.material=wood;
+    ground2.material=wood;
+    ground3.material=wood;
+    ground4.material=wood;
+    ground11.material=wood;
+    ground12.material=wood;
+    ground13.material=wood;
+    ground16.material=wood;
+    ground15.material=wood;
+    ground17.material=wood;
+    ground18.material=wood;
+    ground19.material=wood;
+    ground7.material=wood;
+    ground8.material=wood;
+    ground9.material=wood;
+    cylinder1.material=grayt;
+    wall1.material=wood;
+    wall2.material=wood;
+    wall3.material=wood;
+    wall4.material=wood;
+    box1.material=wood;
+    box2.material=wood;
+    box3.material=wood;
+    box4.material=wood;
+    holder.material=groundmat;
+    wheel.material=grayt;
     pinball1.material=grayt;
     pinball2.material=grayt;
     pinball3.material=grayt;
@@ -663,6 +696,9 @@ var camera = new BABYLON.UniversalCamera("UniversalCamera", new BABYLON.Vector3(
     plank5.material=domino5;
     plank6.material=domino6;
     plank7.material=domino1;
+    plank8.material=wood;
+    plank9.material=wood;
+    plank10.material=wood;
     pregoq.material=groundmat;
     prego.material=groundmat;
     prego1.material=groundmat;
@@ -702,6 +738,25 @@ var camera = new BABYLON.UniversalCamera("UniversalCamera", new BABYLON.Vector3(
     pregop.material=groundmat;
     pregoq.material=groundmat;
     pregor.material=groundmat;
+
+    //particles
+    const particleSystem = new BABYLON.ParticleSystem("particles", 3000);
+    particleSystem.particleTexture = new BABYLON.Texture("https://raw.githubusercontent.com/Saiterxx/audios/master/flare.png");
+    particleSystem.emitter =ball;
+    particleSystem.start();
+    const particleSystem2 = new BABYLON.ParticleSystem("particles", 3000);
+    particleSystem2.particleTexture = new BABYLON.Texture("https://raw.githubusercontent.com/Saiterxx/audios/master/flare.png");
+    particleSystem2.emitter =ball2;
+    particleSystem2.start();
+    const particleSystem3 = new BABYLON.ParticleSystem("particles", 3000);
+    particleSystem3.particleTexture = new BABYLON.Texture("https://raw.githubusercontent.com/Saiterxx/audios/master/flare.png");
+    particleSystem3.emitRate = 5;
+    particleSystem3.minSize = 5;
+    particleSystem3.maxSize = 15;
+    particleSystem3.emitter =bigball;
+    particleSystem3.start();
+
+
     // physics
 
     // cannon vs. oimo
