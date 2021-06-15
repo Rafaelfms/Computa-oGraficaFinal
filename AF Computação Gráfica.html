@@ -820,6 +820,15 @@ var camera = new BABYLON.UniversalCamera("UniversalCamera", new BABYLON.Vector3(
         ball.physicsImpostor = new BABYLON.PhysicsImpostor(ball, BABYLON.PhysicsImpostor.SphereImpostor, {mass: 5});
     });
 
+    var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
+        var textblock = new BABYLON.GUI.TextBlock();
+        textblock.text = "Victor Martins Beck RA: 180289\nRafael de Sousa RA:173019";
+        textblock.fontSize = 12;
+        textblock.top = 250;
+        textblock.left = 0;
+        textblock.color = "white";
+        advancedTexture.addControl(textblock);
+
 	return scene;
 };
                 window.initFunction = async function() {               
